@@ -1,4 +1,5 @@
 export const NajsEvent = {
   EventEmitter: 'NajsEvent.EventEmitter',
-  AsyncEventEmitter: 'NajsEvent.AsyncEventEmitter'
+  AsyncEventEmitter: 'NajsEvent.AsyncEventEmitter',
+  NativeEventEmitter: 'NajsEvent.NativeEventEmitter'
 }

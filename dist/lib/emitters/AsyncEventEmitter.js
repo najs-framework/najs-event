@@ -34,4 +34,4 @@ class AsyncEventEmitter {
     }
 }
 exports.AsyncEventEmitter = AsyncEventEmitter;
-najs_binding_1.register(AsyncEventEmitter);
+najs_binding_1.register(AsyncEventEmitter, constants_1.NajsEvent.AsyncEventEmitter);

@@ -43,4 +43,4 @@ export class AsyncEventEmitter implements Najs.Contracts.Autoload, Najs.Contract
     return this.emittery.emit(eventName, eventData)
   }
 }
-register(AsyncEventEmitter)
+register(AsyncEventEmitter, NajsEvent.AsyncEventEmitter)

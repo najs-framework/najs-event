@@ -54,7 +54,7 @@ describe('AsyncEventEmitter', function () {
         });
     });
     describe('.emit()', function () {
-        it('forwards and to .emittery.emit() by default', function () {
+        it('forwards to .emittery.emit() by default', function () {
             return __awaiter(this, void 0, void 0, function* () {
                 const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
                 const stub = Sinon.stub(aee['emittery'], 'emit');
@@ -63,7 +63,7 @@ describe('AsyncEventEmitter', function () {
                 expect(stub.calledWith('test', ['a', 'b'])).toBe(true);
             });
         });
-        it('forwards and to .emittery.emit() if serial = false', function () {
+        it('forwards to .emittery.emit() if serial = false', function () {
             return __awaiter(this, void 0, void 0, function* () {
                 const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
                 const stub = Sinon.stub(aee['emittery'], 'emit');
@@ -72,7 +72,7 @@ describe('AsyncEventEmitter', function () {
                 expect(stub.calledWith('test', ['a', 'b'])).toBe(true);
             });
         });
-        it('forwards and to .emittery.emitSerial() if serial = true', function () {
+        it('forwards to .emittery.emitSerial() if serial = true', function () {
             return __awaiter(this, void 0, void 0, function* () {
                 const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
                 const stub = Sinon.stub(aee['emittery'], 'emitSerial');
