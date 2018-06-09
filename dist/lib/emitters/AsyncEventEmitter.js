@@ -28,9 +28,9 @@ class AsyncEventEmitter {
     }
     emit(eventName, eventData, serial = false) {
         if (serial) {
-            return this.emittery.emit(eventName, eventData);
+            return this.emittery.emitSerial(eventName, eventData);
         }
-        return this.emittery.emitSerial(eventName, eventData);
+        return this.emittery.emit(eventName, eventData);
     }
 }
 exports.AsyncEventEmitter = AsyncEventEmitter;

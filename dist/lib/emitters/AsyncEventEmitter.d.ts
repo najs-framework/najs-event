@@ -7,5 +7,5 @@ export declare class AsyncEventEmitter implements Najs.Contracts.Autoload, Najs.
     on(eventName: string, listener: Function): this;
     off(eventName: string, listener: Function): this;
     once(eventName: string, listener: Function): this;
-    emit(eventName: string, eventData: any, serial?: boolean): Promise<void>;
+    emit(eventName: string, eventData?: any, serial?: boolean): Promise<void>;
 }

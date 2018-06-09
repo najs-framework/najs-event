@@ -12,6 +12,6 @@ namespace Najs.Contracts.Event {
      * @param {mixed} eventData
      * @param {boolean} serial if true waits for each listener to resolve before triggering the next one, default is false.
      */
-    emit(eventName: string, eventData: any): boolean
+    emit(eventName: string, eventData?: any): boolean
   }
 }

@@ -52,7 +52,8 @@
   },
   "dependencies": {
     "emittery": "^0.4.0",
-    "najs-facade": "^1.1.1"
+    "najs-facade": "^1.1.1",
+    "wolfy87-eventemitter": "^5.2.4"
   },
   "devDependencies": {
     "@types/node": "^10.3.2",

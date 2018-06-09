@@ -35,12 +35,12 @@ export class AsyncEventEmitter implements Najs.Contracts.Autoload, Najs.Contract
     return this
   }
 
-  emit(eventName: string, eventData: any, serial: boolean = false): Promise<void> {
+  emit(eventName: string, eventData?: any, serial: boolean = false): Promise<void> {
     if (serial) {
-      return this.emittery.emit(eventName, eventData)
+      return this.emittery.emitSerial(eventName, eventData)
     }
 
-    return this.emittery.emitSerial(eventName, eventData)
+    return this.emittery.emit(eventName, eventData)
   }
 }
 register(AsyncEventEmitter)
