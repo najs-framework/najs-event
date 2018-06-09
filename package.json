@@ -45,7 +45,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=6.5"
+    "node": ">=8.7"
   },
   "peerDependencies": {
     "najs-binding": "^1.8.0"

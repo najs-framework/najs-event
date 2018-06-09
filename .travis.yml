@@ -24,10 +24,6 @@ jobs:
       node_js: "lts/carbon"
       os: linux
 
-    - stage: platform-test
-      node_js: "lts/boron"
-      os: linux
-
 install:
   - npm install
 
