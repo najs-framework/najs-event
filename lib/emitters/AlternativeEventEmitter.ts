@@ -2,19 +2,23 @@
 /// <reference types="najs-binding" />
 /// <reference path="../contracts/EventEmitter.ts" />
 
-import { EventEmitter } from 'events'
 import { register } from 'najs-binding'
 import { NajsEvent } from '../constants'
+const EventEmitter = require('wolfy87-eventemitter')
 
-export class NativeEventEmitter implements Najs.Contracts.Autoload, Najs.Contracts.Event.EventEmitter {
-  protected eventEmitter: NodeJS.EventEmitter
+export class AlternativeEventEmitter implements Najs.Contracts.Autoload, Najs.Contracts.Event.EventEmitter {
+  protected eventEmitter: any
 
   constructor() {
-    this.eventEmitter = new EventEmitter()
+    this.eventEmitter = this.createEventEmitter()
+  }
+
+  protected createEventEmitter() {
+    return new EventEmitter()
   }
 
   getClassName() {
-    return NajsEvent.NativeEventEmitter
+    return NajsEvent.AlternativeEventEmitter
   }
 
   on(eventName: string, listener: Function): this {
@@ -39,5 +43,4 @@ export class NativeEventEmitter implements Najs.Contracts.Autoload, Najs.Contrac
     return this.eventEmitter.emit(eventName, eventData)
   }
 }
-register(NativeEventEmitter, NajsEvent.EventEmitter)
-register(NativeEventEmitter, NajsEvent.NativeEventEmitter)
+register(AlternativeEventEmitter, NajsEvent.AlternativeEventEmitter)

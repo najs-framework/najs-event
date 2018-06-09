@@ -18,7 +18,7 @@ describe('AsyncEventEmitter', function () {
         expect(aee.getClassName()).toEqual('NajsEvent.AsyncEventEmitter');
     });
     describe('constructor()', function () {
-        it('create new instance of Emittery class', function () {
+        it('creates new instance of Emittery class', function () {
             const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
             expect(aee['emittery']).toBeInstanceOf(Emittery);
         });

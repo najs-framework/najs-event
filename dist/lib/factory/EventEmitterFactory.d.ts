@@ -1,6 +1,8 @@
 /// <reference path="../contracts/EventTarget.d.ts" />
 /// <reference path="../contracts/EventEmitter.d.ts" />
 /// <reference path="../contracts/AsyncEventEmitter.d.ts" />
+import '../emitters/AsyncEventEmitter';
+import '../emitters/NativeEventEmitter';
 export declare const EventEmitterFactory: {
     /**
      * Creates an sync EventEmitter, it will resolve class name "NajsEvent.EventEmitter"

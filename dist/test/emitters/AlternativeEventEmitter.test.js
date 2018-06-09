@@ -10,56 +10,57 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 require("jest");
 const Sinon = require("sinon");
-const NativeEventEmitter_1 = require("../../lib/emitters/NativeEventEmitter");
-const events_1 = require("events");
-describe('NativeEventEmitter', function () {
-    it('implements Najs.Contracts.Autoload with class name "NajsEvent.NativeEventEmitter"', function () {
-        const nee = new NativeEventEmitter_1.NativeEventEmitter();
-        expect(nee.getClassName()).toEqual('NajsEvent.NativeEventEmitter');
+const AlternativeEventEmitter_1 = require("../../lib/emitters/AlternativeEventEmitter");
+describe('AlternativeEventEmitter', function () {
+    it('implements Najs.Contracts.Autoload with class name "NajsEvent.AlternativeEventEmitter"', function () {
+        const aee = new AlternativeEventEmitter_1.AlternativeEventEmitter();
+        expect(aee.getClassName()).toEqual('NajsEvent.AlternativeEventEmitter');
     });
     describe('constructor()', function () {
-        it('creates new instance of Emittery class', function () {
-            const nee = new NativeEventEmitter_1.NativeEventEmitter();
-            expect(nee['eventEmitter']).toBeInstanceOf(events_1.EventEmitter);
+        it('calls .createEventEmitter() to resolve an instance', function () {
+            const createEventEmitterSpy = Sinon.spy(AlternativeEventEmitter_1.AlternativeEventEmitter.prototype, 'createEventEmitter');
+            new AlternativeEventEmitter_1.AlternativeEventEmitter();
+            expect(createEventEmitterSpy.called).toBe(true);
+            createEventEmitterSpy.restore();
         });
     });
     describe('.on()', function () {
         it('simply forwards to .eventEmitter.on() and returns this', function () {
-            const nee = new NativeEventEmitter_1.NativeEventEmitter();
-            const stub = Sinon.stub(nee['eventEmitter'], 'on');
+            const aee = new AlternativeEventEmitter_1.AlternativeEventEmitter();
+            const stub = Sinon.stub(aee['eventEmitter'], 'on');
             stub.returns('anything');
             const listener = () => { };
-            expect(nee.on('test', listener) === nee).toBe(true);
+            expect(aee.on('test', listener) === aee).toBe(true);
             expect(stub.calledWith('test', listener)).toBe(true);
         });
     });
     describe('.off()', function () {
         it('simply forwards to .eventEmitter.removeListener() and returns this', function () {
-            const nee = new NativeEventEmitter_1.NativeEventEmitter();
-            const stub = Sinon.stub(nee['eventEmitter'], 'removeListener');
+            const aee = new AlternativeEventEmitter_1.AlternativeEventEmitter();
+            const stub = Sinon.stub(aee['eventEmitter'], 'removeListener');
             stub.returns('anything');
             const listener = () => { };
-            expect(nee.off('test', listener) === nee).toBe(true);
+            expect(aee.off('test', listener) === aee).toBe(true);
             expect(stub.calledWith('test', listener)).toBe(true);
         });
     });
     describe('.once()', function () {
         it('simply forwards to .eventEmitter.once() and returns this', function () {
-            const nee = new NativeEventEmitter_1.NativeEventEmitter();
-            const stub = Sinon.stub(nee['eventEmitter'], 'once');
+            const aee = new AlternativeEventEmitter_1.AlternativeEventEmitter();
+            const stub = Sinon.stub(aee['eventEmitter'], 'once');
             stub.returns('anything');
             const listener = () => { };
-            expect(nee.once('test', listener) === nee).toBe(true);
+            expect(aee.once('test', listener) === aee).toBe(true);
             expect(stub.calledWith('test', listener)).toBe(true);
         });
     });
     describe('.emit()', function () {
         it('forwards and returns to .eventEmitter.emit() by default', function () {
             return __awaiter(this, void 0, void 0, function* () {
-                const nee = new NativeEventEmitter_1.NativeEventEmitter();
-                const stub = Sinon.stub(nee['eventEmitter'], 'emit');
+                const aee = new AlternativeEventEmitter_1.AlternativeEventEmitter();
+                const stub = Sinon.stub(aee['eventEmitter'], 'emit');
                 stub.returns('anything');
-                expect(nee.emit('test', ['a', 'b'])).toEqual('anything');
+                expect(aee.emit('test', ['a', 'b'])).toEqual('anything');
                 expect(stub.calledWith('test', ['a', 'b'])).toBe(true);
             });
         });
@@ -68,8 +69,8 @@ describe('NativeEventEmitter', function () {
         it('never wait for all listeners resolved', function () {
             return __awaiter(this, void 0, void 0, function* () {
                 const result = [];
-                const nee = new NativeEventEmitter_1.NativeEventEmitter();
-                nee.on('event', function () {
+                const aee = new AlternativeEventEmitter_1.AlternativeEventEmitter();
+                aee.on('event', function () {
                     return new Promise(function (resolve) {
                         setTimeout(function () {
                             result.push('a');
@@ -77,7 +78,7 @@ describe('NativeEventEmitter', function () {
                         }, 100);
                     });
                 });
-                nee.on('event', function () {
+                aee.on('event', function () {
                     return new Promise(function (resolve) {
                         setTimeout(function () {
                             result.push('b');
@@ -85,7 +86,7 @@ describe('NativeEventEmitter', function () {
                         }, 50);
                     });
                 });
-                yield nee.emit('event');
+                yield aee.emit('event');
                 expect(result).toEqual([]);
             });
         });

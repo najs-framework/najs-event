@@ -1,6 +1,6 @@
 {
   "name": "najs-event",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "build": "npm run build-ts && npm run tslint",
     "build-ts": "tsc -d",

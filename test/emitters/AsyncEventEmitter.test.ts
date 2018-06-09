@@ -10,7 +10,7 @@ describe('AsyncEventEmitter', function() {
   })
 
   describe('constructor()', function() {
-    it('create new instance of Emittery class', function() {
+    it('creates new instance of Emittery class', function() {
       const aee = new AsyncEventEmitter()
       expect(aee['emittery']).toBeInstanceOf(Emittery)
     })

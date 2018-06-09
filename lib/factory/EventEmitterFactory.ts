@@ -2,6 +2,8 @@
 /// <reference path="../contracts/EventEmitter.ts" />
 /// <reference path="../contracts/AsyncEventEmitter.ts" />
 
+import '../emitters/AsyncEventEmitter'
+import '../emitters/NativeEventEmitter'
 import { make } from 'najs-binding'
 import { NajsEvent } from '../constants'
 
@@ -36,7 +38,7 @@ export const EventEmitterFactory: {
     for (const name in functions) {
       prototype[name] = function() {
         const eventEmitter = resolver.call(this)
-        const result = eventEmitter[name].call(this, arguments)
+        const result = eventEmitter[name].apply(eventEmitter, arguments)
         return functions[name] ? this : result
       }
     }

@@ -3,15 +3,18 @@
 /// <reference types="najs-binding" />
 /// <reference path="../contracts/EventEmitter.ts" />
 Object.defineProperty(exports, "__esModule", { value: true });
-const events_1 = require("events");
 const najs_binding_1 = require("najs-binding");
 const constants_1 = require("../constants");
-class NativeEventEmitter {
+const EventEmitter = require('wolfy87-eventemitter');
+class AlternativeEventEmitter {
     constructor() {
-        this.eventEmitter = new events_1.EventEmitter();
+        this.eventEmitter = this.createEventEmitter();
+    }
+    createEventEmitter() {
+        return new EventEmitter();
     }
     getClassName() {
-        return constants_1.NajsEvent.NativeEventEmitter;
+        return constants_1.NajsEvent.AlternativeEventEmitter;
     }
     on(eventName, listener) {
         this.eventEmitter.on(eventName, listener);
@@ -29,6 +32,5 @@ class NativeEventEmitter {
         return this.eventEmitter.emit(eventName, eventData);
     }
 }
-exports.NativeEventEmitter = NativeEventEmitter;
-najs_binding_1.register(NativeEventEmitter, constants_1.NajsEvent.EventEmitter);
-najs_binding_1.register(NativeEventEmitter, constants_1.NajsEvent.NativeEventEmitter);
+exports.AlternativeEventEmitter = AlternativeEventEmitter;
+najs_binding_1.register(AlternativeEventEmitter, constants_1.NajsEvent.AlternativeEventEmitter);

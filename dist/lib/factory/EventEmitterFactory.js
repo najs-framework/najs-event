@@ -3,6 +3,8 @@
 /// <reference path="../contracts/EventEmitter.ts" />
 /// <reference path="../contracts/AsyncEventEmitter.ts" />
 Object.defineProperty(exports, "__esModule", { value: true });
+require("../emitters/AsyncEventEmitter");
+require("../emitters/NativeEventEmitter");
 const najs_binding_1 = require("najs-binding");
 const constants_1 = require("../constants");
 exports.EventEmitterFactory = {
@@ -19,7 +21,7 @@ exports.EventEmitterFactory = {
         for (const name in functions) {
             prototype[name] = function () {
                 const eventEmitter = resolver.call(this);
-                const result = eventEmitter[name].call(this, arguments);
+                const result = eventEmitter[name].apply(eventEmitter, arguments);
                 return functions[name] ? this : result;
             };
         }
