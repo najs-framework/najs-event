@@ -44,13 +44,13 @@ describe('AsyncEventEmitter', function () {
         });
     });
     describe('.once()', function () {
-        it('simply forwards to .emittery.once() and returns this', function () {
+        it('simply forwards to .emittery.on() with auto unsubscribe and returns this', function () {
             const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
-            const stub = Sinon.stub(aee['emittery'], 'once');
+            const stub = Sinon.stub(aee['emittery'], 'on');
             stub.returns('anything');
             const listener = () => { };
             expect(aee.once('test', listener) === aee).toBe(true);
-            expect(stub.calledWith('test', listener)).toBe(true);
+            expect(stub.calledWith('test')).toBe(true);
         });
     });
     describe('.emit()', function () {
@@ -129,6 +129,106 @@ describe('AsyncEventEmitter', function () {
                 });
                 yield aee.emit('event', undefined, true);
                 expect(result).toEqual(['a', 'b']);
+            });
+        });
+        it('should work with .once() only 1 time', function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                const result = [];
+                const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
+                aee.once('event', function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            result.push('a');
+                            resolve();
+                        }, 100);
+                    });
+                });
+                yield aee.emit('event');
+                yield aee.emit('event');
+                yield aee.emit('event');
+                yield aee.emit('event');
+                yield aee.emit('event');
+                expect(result).toEqual(['a']);
+            });
+        });
+        it('should work with .once() for all all listeners resolved before leaving', function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                const result = [];
+                const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
+                aee.once('event-1', function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            result.push('a');
+                            resolve();
+                        }, 100);
+                    });
+                });
+                aee.once('event-2', function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            result.push('b');
+                            resolve();
+                        }, 50);
+                    });
+                });
+                yield aee.emit('event-1');
+                yield aee.emit('event-2');
+                expect(result).toEqual(['a', 'b']);
+            });
+        });
+        it('should work with .once() and option serial = true', function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                const result = [];
+                const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
+                aee.once('event-1', function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            result.push('a');
+                            resolve();
+                        }, 100);
+                    });
+                });
+                aee.once('event-2', function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            result.push('b');
+                            resolve();
+                        }, 50);
+                    });
+                });
+                yield aee.emit('event-1', undefined, true);
+                yield aee.emit('event-2', undefined, true);
+                expect(result).toEqual(['a', 'b']);
+            });
+        });
+        it('.on() and .once() should work together perfectly', function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                const result = [];
+                const aee = new AsyncEventEmitter_1.AsyncEventEmitter();
+                aee.once('event', function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            result.push('a');
+                            resolve();
+                        }, 100);
+                    });
+                });
+                aee.on('event', function () {
+                    return new Promise(function (resolve) {
+                        setTimeout(function () {
+                            result.push('b');
+                            resolve();
+                        }, 50);
+                    });
+                });
+                yield aee.emit('event');
+                expect(result).toEqual(['b', 'a']);
+                yield aee.emit('event');
+                expect(result).toEqual(['b', 'a', 'b']);
+                yield aee.emit('event');
+                expect(result).toEqual(['b', 'a', 'b', 'b']);
+                yield aee.emit('event');
+                expect(result).toEqual(['b', 'a', 'b', 'b', 'b']);
             });
         });
     });

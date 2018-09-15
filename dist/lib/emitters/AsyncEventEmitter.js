@@ -21,9 +21,10 @@ class AsyncEventEmitter {
         return this;
     }
     once(eventName, listener) {
-        // Definition error in emittery package
-        ;
-        this.emittery.once(eventName, listener);
+        const unsubscribe = this.emittery.on(eventName, () => {
+            unsubscribe();
+            return listener.apply(undefined, arguments);
+        });
         return this;
     }
     emit(eventName, eventData, serial = false) {

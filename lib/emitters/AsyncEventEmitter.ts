@@ -29,8 +29,10 @@ export class AsyncEventEmitter implements Najs.Contracts.Autoload, Najs.Contract
   }
 
   once(eventName: string, listener: Function): this {
-    // Definition error in emittery package
-    ; (this.emittery as any).once(eventName, listener)
+    const unsubscribe = this.emittery.on(eventName, () => {
+      unsubscribe()
+      return listener.apply(undefined, arguments)
+    })
 
     return this
   }
